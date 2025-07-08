@@ -157,12 +157,11 @@
 .alex-sprite-isometric {
   width: 40px;
   height: 50px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  position: relative;
   filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.4));
   transform: rotateX(-30deg) rotateY(30deg);
   transition: all 0.3s ease;
+  transform-style: preserve-3d;
 }
 
 /* Character animations */
@@ -175,6 +174,269 @@
   animation: isometric-character-bounce 3s ease-in-out infinite;
 }
 
+/* Isometric Character Parts */
+.alex-sprite-isometric::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    /* Head */
+    radial-gradient(circle at 20px 12px, #fdbcb4 0%, #fdbcb4 6px, transparent 6px),
+    /* Hair */
+    radial-gradient(ellipse at 20px 8px, #654321 0%, #654321 8px, transparent 8px),
+    /* Body */
+    linear-gradient(to bottom, transparent 18px, #4a90e2 18px, #4a90e2 35px, transparent 35px),
+    /* Arms */
+    linear-gradient(to right, #fdbcb4 8px, #fdbcb4 12px, transparent 12px, transparent 28px, #fdbcb4 28px, #fdbcb4 32px),
+    /* Legs */
+    linear-gradient(to bottom, transparent 35px, #333 35px, #333 48px, transparent 48px);
+  background-size: 
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px;
+  background-repeat: no-repeat;
+  transform: skewY(-15deg) rotateY(15deg);
+}
+
+/* Eyes and facial features */
+.alex-sprite-isometric::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  width: 8px;
+  height: 4px;
+  background: 
+    radial-gradient(circle at 2px 2px, #000 0%, #000 1px, transparent 1px),
+    radial-gradient(circle at 6px 2px, #000 0%, #000 1px, transparent 1px);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+  transform: skewY(-15deg) rotateY(15deg);
+}
+
+/* Character state animations and variations */
+.alex-idle-iso {
+  /* Base idle state - uses the ::before and ::after pseudo-elements above */
+}
+
+.alex-sleep {
+  transform: rotateX(-30deg) rotateY(30deg) rotateZ(-90deg) scale(0.9);
+}
+
+.alex-sleep::before {
+  background: 
+    /* Sleeping head */
+    radial-gradient(circle at 20px 12px, #fdbcb4 0%, #fdbcb4 6px, transparent 6px),
+    /* Hair */
+    radial-gradient(ellipse at 20px 8px, #654321 0%, #654321 8px, transparent 8px),
+    /* Pajama body */
+    linear-gradient(to bottom, transparent 18px, #8b5cf6 18px, #8b5cf6 35px, transparent 35px),
+    /* Arms */
+    linear-gradient(to right, #fdbcb4 8px, #fdbcb4 12px, transparent 12px, transparent 28px, #fdbcb4 28px, #fdbcb4 32px),
+    /* Legs */
+    linear-gradient(to bottom, transparent 35px, #8b5cf6 35px, #8b5cf6 48px, transparent 48px);
+  background-size: 
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px;
+}
+
+.alex-sleep::after {
+  content: '💤';
+  top: -5px;
+  left: 25px;
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 8px;
+  animation: sleep-zzz 2s ease-in-out infinite;
+}
+
+@keyframes sleep-zzz {
+  0%, 100% { opacity: 0.6; transform: translateY(0px); }
+  50% { opacity: 1; transform: translateY(-3px); }
+}
+
+.alex-eat::before {
+  background: 
+    /* Head */
+    radial-gradient(circle at 20px 12px, #fdbcb4 0%, #fdbcb4 6px, transparent 6px),
+    /* Hair */
+    radial-gradient(ellipse at 20px 8px, #654321 0%, #654321 8px, transparent 8px),
+    /* Body */
+    linear-gradient(to bottom, transparent 18px, #22c55e 18px, #22c55e 35px, transparent 35px),
+    /* Arms - positioned for eating */
+    linear-gradient(to right, #fdbcb4 10px, #fdbcb4 14px, transparent 14px, transparent 26px, #fdbcb4 26px, #fdbcb4 30px),
+    /* Legs */
+    linear-gradient(to bottom, transparent 35px, #333 35px, #333 48px, transparent 48px);
+  background-size: 
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px;
+}
+
+.alex-eat::after {
+  content: '🍽️';
+  top: 8px;
+  left: 12px;
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 6px;
+}
+
+.alex-exercise::before {
+  background: 
+    /* Head */
+    radial-gradient(circle at 20px 12px, #fdbcb4 0%, #fdbcb4 6px, transparent 6px),
+    /* Hair */
+    radial-gradient(ellipse at 20px 8px, #654321 0%, #654321 8px, transparent 8px),
+    /* Workout shirt */
+    linear-gradient(to bottom, transparent 18px, #ef4444 18px, #ef4444 35px, transparent 35px),
+    /* Arms - flexed */
+    linear-gradient(to right, #fdbcb4 6px, #fdbcb4 10px, transparent 10px, transparent 30px, #fdbcb4 30px, #fdbcb4 34px),
+    /* Shorts */
+    linear-gradient(to bottom, transparent 35px, #1f2937 35px, #1f2937 48px, transparent 48px);
+  background-size: 
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px;
+  animation: exercise-flex 1s ease-in-out infinite;
+}
+
+@keyframes exercise-flex {
+  0%, 100% { transform: skewY(-15deg) rotateY(15deg) scale(1); }
+  50% { transform: skewY(-15deg) rotateY(15deg) scale(1.05); }
+}
+
+.alex-exercise::after {
+  content: '💪';
+  top: 5px;
+  left: 8px;
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 6px;
+  animation: exercise-sweat 0.5s ease-in-out infinite;
+}
+
+@keyframes exercise-sweat {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.alex-relax::before {
+  background: 
+    /* Head */
+    radial-gradient(circle at 20px 12px, #fdbcb4 0%, #fdbcb4 6px, transparent 6px),
+    /* Hair */
+    radial-gradient(ellipse at 20px 8px, #654321 0%, #654321 8px, transparent 8px),
+    /* Casual shirt */
+    linear-gradient(to bottom, transparent 18px, #8b5cf6 18px, #8b5cf6 35px, transparent 35px),
+    /* Arms - relaxed */
+    linear-gradient(to right, #fdbcb4 8px, #fdbcb4 12px, transparent 12px, transparent 28px, #fdbcb4 28px, #fdbcb4 32px),
+    /* Legs */
+    linear-gradient(to bottom, transparent 35px, #333 35px, #333 48px, transparent 48px);
+  background-size: 
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px;
+}
+
+.alex-relax::after {
+  content: '📺';
+  top: 8px;
+  left: 25px;
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 6px;
+}
+
+.alex-drinkWater::before {
+  background: 
+    /* Head */
+    radial-gradient(circle at 20px 12px, #fdbcb4 0%, #fdbcb4 6px, transparent 6px),
+    /* Hair */
+    radial-gradient(ellipse at 20px 8px, #654321 0%, #654321 8px, transparent 8px),
+    /* Body */
+    linear-gradient(to bottom, transparent 18px, #06b6d4 18px, #06b6d4 35px, transparent 35px),
+    /* Arms - one raised for drinking */
+    linear-gradient(to right, #fdbcb4 8px, #fdbcb4 12px, transparent 12px, transparent 24px, #fdbcb4 24px, #fdbcb4 28px),
+    /* Legs */
+    linear-gradient(to bottom, transparent 35px, #333 35px, #333 48px, transparent 48px);
+  background-size: 
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px;
+}
+
+.alex-drinkWater::after {
+  content: '💧';
+  top: 6px;
+  left: 22px;
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 6px;
+  animation: water-sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes water-sparkle {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.alex-shower::before {
+  background: 
+    /* Head */
+    radial-gradient(circle at 20px 12px, #fdbcb4 0%, #fdbcb4 6px, transparent 6px),
+    /* Hair - wet */
+    radial-gradient(ellipse at 20px 8px, #4a4a4a 0%, #4a4a4a 8px, transparent 8px),
+    /* Towel */
+    linear-gradient(to bottom, transparent 18px, #ffffff 18px, #ffffff 35px, transparent 35px),
+    /* Arms */
+    linear-gradient(to right, #fdbcb4 8px, #fdbcb4 12px, transparent 12px, transparent 28px, #fdbcb4 28px, #fdbcb4 32px),
+    /* Legs */
+    linear-gradient(to bottom, transparent 35px, #fdbcb4 35px, #fdbcb4 48px, transparent 48px);
+  background-size: 
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px,
+    40px 50px;
+}
+
+.alex-shower::after {
+  content: '🚿';
+  top: 2px;
+  left: 18px;
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 6px;
+  animation: shower-steam 2s ease-in-out infinite;
+}
+
+@keyframes shower-steam {
+  0%, 100% { opacity: 0.6; transform: translateY(0px); }
+  50% { opacity: 1; transform: translateY(-2px); }
+}
 /* Realistic Isometric Objects Base */
 .isometric-object {
   position: absolute;
@@ -1714,9 +1976,6 @@
 }
 
 /* Character sprite for isometric view */
-.alex-idle-iso {
-  background-image: url("data:image/svg+xml,%3Csvg width='40' height='50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg transform='skewY(-6deg) scale(1.05)'%3E%3C!-- Head --%3E%3Crect x='14' y='6' width='14' height='14' fill='%23fdbcb4' rx='2'/%3E%3C!-- Hair --%3E%3Crect x='12' y='4' width='18' height='10' fill='%23654321' rx='4'/%3E%3C!-- Eyes --%3E%3Crect x='16' y='10' width='2' height='2' fill='%23000'/%3E%3Crect x='24' y='10' width='2' height='2' fill='%23000'/%3E%3C!-- Body --%3E%3Crect x='12' y='20' width='18' height='20' fill='%234a90e2' rx='2'/%3E%3C!-- Arms --%3E%3Crect x='7' y='22' width='5' height='14' fill='%23fdbcb4' rx='2'/%3E%3Crect x='30' y='22' width='5' height='14' fill='%23fdbcb4' rx='2'/%3E%3C!-- Legs --%3E%3Crect x='14' y='40' width='5' height='14' fill='%23333' rx='2'/%3E%3Crect x='23' y='40' width='5' height='14' fill='%23333' rx='2'/%3E%3C/g%3E%3C/svg%3E");
-}
 
 /* Character shadow */
 .character-shadow {
